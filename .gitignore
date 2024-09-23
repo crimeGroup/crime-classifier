@@ -1,0 +1,11 @@
+archive
+.venv
+
+node_modules
+
+models
+saved_models
+__pycache__
+
+swap.py
+rename.sh
