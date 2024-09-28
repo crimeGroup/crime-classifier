@@ -1,9 +1,43 @@
 # crime-classifier
 
+## Requirements
+
+- VSCode
+- Python
+- Git
+- Live Server (VSCode Extension)
+
+
+## How to run
+
+1. Create a virtual environment
+```bash
+# Windows
+python -m venv venv
+```
+
+2. Activate virtual environment
+
+```bash
+source venv/Scripts/activate
+```
+
+3. Install dependencies
+
+4. Setup user interface
+
+    - Run `index.html` in the browser
+
+    - Input Tagalog hate speech in text box or choose one of the examples
+
+    - Choose model and variant
+
+    - Classify
+
 ## Directory Structure
 
-<!-- ### Server
- - *server.py* (A simple Flask-based API to get classifications from model and send results to an endpoint) -->
+### Server
+ - *server.py* (A simple Flask-based API to get classifications from model and send results to an endpoint)
 
 ### Source
  - *bert.ipynb*
@@ -97,3 +131,14 @@
         - *xlnet-experiment-5.csv*
     - **XLNet Fine-tuned**
         - *xlnet-fine-tuned-experiment-5.csv*
+
+
+## Dev notes
+
+This is a typescript + sass project. Source files located in src folder
+To make changes, please run
+
+```bash
+cd app 
+npm run watch
+```

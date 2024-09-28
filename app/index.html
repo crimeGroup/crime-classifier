@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criminator</title>
+    <script src="dist/app.js" type="module" defer></script>
+    <link rel="stylesheet" href="public/stylesheets/style.css">
+</head>
+
+<body>
+    <header></header>
+    <nav>
+        <h1>Criminator</h1>
+        <!-- <ul>
+            <li>Link 1</li>
+            <li>Link 1</li>
+            <li>Link 1</li>
+        </ul> -->
+    </nav>
+    <div class="wrapper grid">
+        <main>
+            <form class="input-container" id="form">
+                <div class="form-group">
+                    <div class="">
+                        <h1 class="title">Crime Speech Classifier</h1>
+                        <p class="description">Enter 80 to 600 characters.</p>
+                    </div>
+                    <textarea id="input-field" placeholder="Enter crime speech"></textarea>
+                    <div>
+                        <div id="char-counter-container">
+                            <div id="char-counter">
+                                <span id="current-char-count">0</span>/ 600
+                            </div>
+                        </div>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <h1 class="title">Examples</h1>
+                        <select class="example-selector" id="example-selector" name="example">
+                            <option disabled>Select an example</option>
+                        </select>
+                    </div>
+                    <div class="form-group model-selection">
+                        <div class="">
+                            <h1 class="title">Text Classification Model</h1>
+                            <p class="description">Select a model for text classification</p>
+                        </div>
+                        <div class="models">
+                            <label for="bert">
+                                <input type="radio" id="bert" class="radio-choice" name="model" value="bert">
+                                <div class="model-option">
+                                    <img src="./assets/bert.png">
+                                    <h3 class="model-name">BERT</h3>
+                                    <p class="model-description">Bidirectional Encoder Representation of Transformers
+                                    </p>
+                                </div>
+                            </label>
+                            <label for="xlnet">
+                                <input type="radio" id="xlnet" class="radio-choice" name="model" value="xlnet">
+                                <div class="model-option">
+                                    <img src="./assets/xlnet.webp">
+                                    <h3 class="model-name">XLNet</h3>
+                                    <p class="model-description">Generalized Autoregressive Pretraining for Language
+                                        Understanding
+                                    </p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group model-selection" id="variant-selector">
+                        <div class="">
+                            <h1 class="title">Model Variant</h1>
+                            <p class="description">Select a variant for the model</p>
+                        </div>
+                        <div class="models">
+                            <label for="pre-trained">
+                                <input type="radio" id="pre-trained" class="radio-choice" name="variant"
+                                    value="pretrained">
+                                <div class="model-option">
+                                    <div class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cog">
+                                            <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z" />
+                                            <path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" />
+                                            <path d="M12 2v2" />
+                                            <path d="M12 22v-2" />
+                                            <path d="m17 20.66-1-1.73" />
+                                            <path d="M11 10.27 7 3.34" />
+                                            <path d="m20.66 17-1.73-1" />
+                                            <path d="m3.34 7 1.73 1" />
+                                            <path d="M14 12h8" />
+                                            <path d="M2 12h2" />
+                                            <path d="m20.66 7-1.73 1" />
+                                            <path d="m3.34 17 1.73-1" />
+                                            <path d="m17 3.34-1 1.73" />
+                                            <path d="m11 13.73-4 6.93" />
+                                        </svg>
+                                    </div>
+                                    <h3 class="model-name">Pre-trained</h3>
+                                    <p class="model-description">General purpose model
+                                    </p>
+                                </div>
+                            </label>
+                            <label for="fine-tuned">
+                                <input type="radio" id="fine-tuned" class="radio-choice" name="variant"
+                                    value="finetuned">
+                                <div class="model-option">
+                                    <div class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-siren">
+                                            <path d="M7 18v-6a5 5 0 1 1 10 0v6" />
+                                            <path
+                                                d="M5 21a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2z" />
+                                            <path d="M21 12h1" />
+                                            <path d="M18.5 4.5 18 5" />
+                                            <path d="M2 12h1" />
+                                            <path d="M12 2v1" />
+                                            <path d="m4.929 4.929.707.707" />
+                                            <path d="M12 12v6" />
+                                        </svg>
+                                    </div>
+                                    <h3 class="model-name">Fine-tuned</h3>
+                                    <p class="model-description">Model optimized for crime speech classfication
+                                    </p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button class="submit-btn" id="classify-btn">Classify</button>
+                    </div>
+            </form>
+        </main>
+        <aside class="predictions-container">
+            <div class="form-group">
+                <h1 class="title">Predictions</h1>
+                <div id="error-container" id="prediction-error">
+                    <!-- <div class="error-alert">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="lucide lucide-info">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 16v-4" />
+                            <path d="M12 8h.01" />
+                        </svg>
+                        <p>No crime labels detected. Please ensure input contains detailed information such as date,
+                            time, location, nature, or description of the crime.
+                        </p>
+                    </div> -->
+                </div>
+                <div class="labels" id="labels">
+                    <span class="label">
+                        <div class="text">
+                            <p>Murder</p>
+                            <p>32%</p>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar"></div>
+                        </div>
+                    </span>
+                </div>
+                <div id="stats">
+                    <p id="model">Model:</p>
+                    <p id="time">Processing Time:</p>
+                </div>
+            </div>
+
+        </aside>
+    </div>
+
+    <!-- <div class="myDiv">sss</div> -->
+</body>
+
+</html>
