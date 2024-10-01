@@ -98,9 +98,12 @@ nav ul {
   gap: 1rem;
 }
 
+section {
+  padding: 2rem;
+}
+
 main {
   padding: 2rem;
-  background-color: white;
 }
 @media (min-width: 640px) {
   main {
@@ -268,7 +271,11 @@ button[disabled] {
   animation: bar 1s cubic-bezier(0.46, 0.03, 0.52, 1.02);
 }
 
-#stats {
+.belowThreshold {
+  opacity: 50%;
+}
+
+.stats {
   font-size: 11px;
   opacity: 60%;
   margin-top: 0.25rem;
@@ -283,6 +290,73 @@ button[disabled] {
   font-size: 12px;
   margin-bottom: 1rem;
 }
+.error-alert.error {
+  border: 1px solid red;
+  background-color: rgb(255, 157, 157);
+  color: rgb(109, 5, 5);
+}
+.error-alert.info {
+  border: 1px solid blue;
+  background-color: rgb(157, 175, 255);
+  color: rgb(5, 53, 109);
+}
+
+.history-container {
+  border: 2px solid #212E4A;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  padding-bottom: 2rem;
+}
+.history-container .history-item {
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: #252735;
+  padding: 0 0.5rem;
+}
+.history-container .history-item .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+.history-container .history-item .header .stats {
+  font-size: 13px;
+  display: flex;
+  gap: 0.5ch;
+}
+.history-container .history-item .header .stats .model {
+  font-weight: 600;
+}
+.history-container .history-item .header .menu {
+  padding: 0.5rem;
+}
+.history-container .history-item .history-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.history-container .history-item .labels-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.history-container .history-item .labels-container .label {
+  background-color: #206686;
+  padding: 0.3rem 0.6rem;
+  color: white;
+  border-radius: 24rem;
+  font-size: 12px;
+}
+.history-container .history-item:not(:last-child) {
+  border-bottom: 1px solid #e5e7eb;
+  /* Light gray border (you can adjust the color as needed) */
+  margin-bottom: 1rem;
+  /* Optional: add space below each item */
+  padding-bottom: 1rem;
+  /* Optional: ensure padding between the item content and the border */
+}
 
 @keyframes spin {
   0% {
@@ -290,7 +364,6 @@ button[disabled] {
   }
   100% {
     transform: rotate(360deg);
-    width: 30%;
   }
 }
 @keyframes bar {
@@ -300,6 +373,30 @@ button[disabled] {
   100% {
     width: var(--final-width);
   }
+}
+.loader {
+  border: 4px solid #f3f3f3;
+  /* Light grey */
+  border-top: 4px solid #3498db;
+  margin-right: 8px;
+  /* Blue */
+  border-radius: 50%;
+  width: 20px;
+  /* Scaled down width */
+  height: 20px;
+  /* Scaled down height */
+  animation: spin 0.5s linear infinite;
+}
+
+#classify-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#classify-btn:disabled {
+  opacity: 1;
+  cursor: progress;
 }
 
 /*# sourceMappingURL=style.css.map */

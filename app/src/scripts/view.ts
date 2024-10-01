@@ -1,6 +1,6 @@
 import { THRESHOLD } from "../data/constants.js";
-import { Result } from "../data/results.js";
-import { $, isValidCharCount } from "./utils.js";
+import { Result } from "../data/types.js";
+import { $, generateID, isValidCharCount } from "./utils.js";
 
 export function populateExamples({ selectField, examples }: { selectField: HTMLSelectElement, examples: string[] }) {
     examples.forEach((example, i) => {
@@ -37,7 +37,7 @@ export function updatePredictionsField({ resultsContainer, statsContainer, resul
         const isAboveThreshold = prediction.probability > THRESHOLD;
 
         temp += `
-                    <span class="label" id="${label.toLowerCase()}" key="${label.toLowerCase()}" style="opacity: ${!isAboveThreshold ? 0.5 : 1}">  
+                    <span class="label ${isAboveThreshold ? "aboveThreshold" : "belowThreshold"}" id="${label.toLowerCase()}" key="${label.toLowerCase()}">  
                         <div class="text">
                             <p>${label}</p>
                             <p>${probability}%</p>
@@ -65,7 +65,7 @@ export function updatePredictionsField({ resultsContainer, statsContainer, resul
 
 export function updateCharCounter({ displayContainer, counterContainer, charCount }: { displayContainer: HTMLDivElement, counterContainer: HTMLSpanElement, charCount: number }): void {
     displayContainer.style.color = isValidCharCount(charCount) ? 'inherit' : 'red';
-    counterContainer.innerText = String(charCount);
+    counterContainer.innerHTML = `${String(charCount)}`;
 }
 
 
@@ -88,7 +88,7 @@ export function renderToast({ message, type }: { message: string, type: "info" |
     }
 
     const template = `
-        <div class="error-alert">
+        <div class="error-alert ${type}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-info"> 
@@ -102,23 +102,69 @@ export function renderToast({ message, type }: { message: string, type: "info" |
 
     container.innerHTML = template;
 
-    const toast = document.querySelector(".error-alert") as HTMLDivElement;
 
-    const toastType = {
-        "error": {
-            border: "1px solid red",
-            backgroundColor: "rgb(255, 157, 157)",
-            color: "rgb(109, 5, 5)"
-        },
-        "info": {
-            border: "1px solid blue",
-            backgroundColor: "rgb(157, 175, 255)",
-            color: "rgb(5, 53, 109)"
+}
+
+export function addResultToHistory({ container, result }: { container: HTMLDivElement, result: Result }) {
+    container.innerHTML = generateHistoryItem(result) + container.innerHTML;
+}
+
+export function generateHistoryItem(result: Result) {
+    return `
+    <div class="history-item" id="${generateID()}">
+                <div class="header">
+                    <div class="stats">
+                        <p class="model">${result.model.name}-${result.model.variant}</p>
+                        <p class="time">• ${result.processing_time} seconds</p>
+                    </div>
+                    <div class="menu">
+                        <?xml version="1.0" ?><svg fill="none" height="20" viewBox="0 0 20 20" width="20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6 10C6 11.1046 5.10457 12 4 12C2.89543 12 2 11.1046 2 10C2 8.89543 2.89543 8 4 8C5.10457 8 6 8.89543 6 10Z"
+                                fill="#4A5568" />
+                            <path
+                                d="M12 10C12 11.1046 11.1046 12 10 12C8.89543 12 8 11.1046 8 10C8 8.89543 8.89543 8 10 8C11.1046 8 12 8.89543 12 10Z"
+                                fill="#4A5568" />
+                            <path
+                                d="M16 12C17.1046 12 18 11.1046 18 10C18 8.89543 17.1046 8 16 8C14.8954 8 14 8.89543 14 10C14 11.1046 14.8954 12 16 12Z"
+                                fill="#4A5568" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="history-content">
+                    <p> ${result.input}</p>
+                    <div class="labels-container">
+                    ${result.predictions.map((prediction) => {
+
+        const probability = prediction.probability;
+        const isAboveThreshold = probability > THRESHOLD;
+
+        return `<span class="label ${isAboveThreshold ? "" : "belowThreshold"}">${prediction.label} ${probability}%</span>`
+    }).join("")
+
         }
+                    </div>
+                </div>
+            </div>
+    
+    `
+}
+
+export function setLoading(isloading: boolean) {
+
+    const classifyBtn = $("classify-btn") as HTMLButtonElement;
+
+    if (!isloading) {
+        classifyBtn.disabled = false;
+        classifyBtn.innerHTML = "Classify"
+        return;
     }
 
-    toast.style.border = toastType[type].border;
-    toast.style.backgroundColor = toastType[type].backgroundColor;
-    toast.style.color = toastType[type].color;
+    classifyBtn.disabled = true;
+    classifyBtn.innerHTML = `<span class="loader"></span> <p>Loading</p>`
+
+
 }
+
 

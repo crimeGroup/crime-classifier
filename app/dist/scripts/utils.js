@@ -1,5 +1,5 @@
 import { MAX_CHARS, MIN_CHARS } from "../data/constants.js";
-import { LABELS } from "../data/results.js";
+import { LABELS } from "../data/types.js";
 export function getRandomNumber(max, min) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -42,5 +42,11 @@ export function generateMockResult({ init }) {
         model: "bert",
         predictions
     };
+}
+export function generateID() {
+    return Date.now();
+}
+export function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 //# sourceMappingURL=utils.js.map

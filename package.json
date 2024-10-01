@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "sass": "sass --watch app/src/sass:app/public/stylesheets",
+    "tsc": "npx tsc -w",
+    "watch": "npm run sass & npm run tsc",
+    "serve": "python3 server.py"
+  }
+}

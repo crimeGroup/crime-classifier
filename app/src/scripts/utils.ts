@@ -1,5 +1,5 @@
 import { MAX_CHARS, MIN_CHARS } from "../data/constants.js";
-import { LABELS, Result, ValidLabel } from "../data/results.js";
+import { LABELS, Result, ValidLabel } from "../data/types.js";
 
 export function getRandomNumber(max: number, min: number) {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -55,8 +55,14 @@ export function generateMockResult({ init }: { init?: boolean }): Result {
     }
 }
 
+export function generateID(): number {
+    return Date.now();
+}
 
 
+export function delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 
 

@@ -1,4 +1,4 @@
-import { Result, ValidModel } from "../data/results.js";
+import { Result, ValidModel } from "../data/types.js";
 
 type FormRequest = {
     model: ValidModel,
