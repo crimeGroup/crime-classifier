@@ -20,10 +20,10 @@ python -m venv venv
 
 ```bash
 # Windows
-source venv/Scripts/activate
+venv/Scripts/activate
 
 # Linux
-source .venv/bin/activate
+.venv/bin/activate
 
 ```
 
