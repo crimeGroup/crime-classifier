@@ -4,6 +4,28 @@ from transformers import AutoTokenizer, AutoModel
 import pandas as pd
 import time  
 import random
+import re
+
+def preprocess(text):
+    # Convert to lowercase
+    text = re.sub(r'[A-Z]', lambda y: y.group(0).lower(), text)
+    
+    # Remove unimportant links
+    text = re.sub(r'http[s]?://\S+', '', text)
+
+    # Remove emojis (non-ASCII characters)
+    text = re.sub(r'[^\x00-\x7F]+', '', text)
+
+    # Remove usernames (mentions)
+    text = re.sub(r'@\w+', '', text)
+
+    # Remove punctuations and replace with space
+    text = re.sub(r'[^\w\s]', ' ', text)
+
+    # Remove hashtags (keeping the text but removing the # symbol)
+    text = re.sub(r'#', '', text)
+    
+    return text
 
 MODEL_NAMES = {
     "bert": 'google-bert/bert-base-uncased',
@@ -112,8 +134,10 @@ def get_predictions(input_text, model_id, model_variant):
     # Classification
     start_time = time.time()  # Start the timer
 
+    preprocessed_text = preprocess(input_text)
+
     # Encode text
-    encoded_input_text = tokenizer(input_text, padding="max_length", truncation=True, max_length=128, return_tensors='pt')
+    encoded_input_text = tokenizer(preprocessed_text, padding="max_length", truncation=True, max_length=128, return_tensors='pt')
 
     # Get raw results
     with torch.no_grad():
